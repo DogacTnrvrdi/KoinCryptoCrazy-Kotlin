@@ -31,16 +31,6 @@ class CryptoViewModel(
         cryptoLoading.value = Resource.loading(data = true)
 
         /*
-        val BASE_URL = "https://raw.githubusercontent.com/"
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(ICryptoAPI::class.java)
-         */
-
-        /*
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
 
          }

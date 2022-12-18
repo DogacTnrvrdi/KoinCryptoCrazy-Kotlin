@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dogactnrvrdi.koincryptocrazy.R
@@ -13,9 +11,9 @@ import com.dogactnrvrdi.koincryptocrazy.databinding.FragmentListBinding
 import com.dogactnrvrdi.koincryptocrazy.model.Crypto
 import com.dogactnrvrdi.koincryptocrazy.service.ICryptoAPI
 import com.dogactnrvrdi.koincryptocrazy.viewmodel.CryptoViewModel
-import kotlinx.coroutines.*
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListFragment : Fragment(R.layout.fragment_list), RecyclerViewAdapter.Listener {
 
@@ -23,7 +21,10 @@ class ListFragment : Fragment(R.layout.fragment_list), RecyclerViewAdapter.Liste
     private val binding get() = _binding!!
 
     private var cryptoAdapter = RecyclerViewAdapter(arrayListOf(), this)
-    private lateinit var viewModel: CryptoViewModel
+    private val viewModel by viewModel<CryptoViewModel>()
+
+    //private val api = get<ICryptoAPI>()
+    //private val lazyApi by inject<ICryptoAPI>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,7 +33,6 @@ class ListFragment : Fragment(R.layout.fragment_list), RecyclerViewAdapter.Liste
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.layoutManager = layoutManager
 
-        viewModel = ViewModelProvider(this).get(CryptoViewModel::class.java)
         viewModel.getDataFromAPI()
 
         observeLiveData()

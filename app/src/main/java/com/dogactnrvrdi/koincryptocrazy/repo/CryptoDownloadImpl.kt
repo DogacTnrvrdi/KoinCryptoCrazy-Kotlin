@@ -4,7 +4,9 @@ import com.dogactnrvrdi.koincryptocrazy.model.Crypto
 import com.dogactnrvrdi.koincryptocrazy.service.ICryptoAPI
 import com.dogactnrvrdi.koincryptocrazy.util.Resource
 
-class CryptoDownloadImpl(private val api: ICryptoAPI) : ICryptoDownload {
+class CryptoDownloadImpl(
+    private val api: ICryptoAPI
+) : ICryptoDownload {
     override suspend fun downloadCryptos(): Resource<List<Crypto>> {
         return try {
             val response = api.getData()
