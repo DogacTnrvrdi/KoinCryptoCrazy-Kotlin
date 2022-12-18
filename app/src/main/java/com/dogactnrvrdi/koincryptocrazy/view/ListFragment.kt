@@ -46,14 +46,16 @@ class ListFragment : Fragment(R.layout.fragment_list), RecyclerViewAdapter.Liste
                 binding.cryptoProgressBar.visibility = View.GONE
                 binding.cryptoErrorText.visibility = View.GONE
 
-                cryptoAdapter = RecyclerViewAdapter(ArrayList(cryptos), this@ListFragment)
+                cryptoAdapter = RecyclerViewAdapter(
+                    ArrayList(cryptos.data ?: arrayListOf()), this@ListFragment
+                )
                 binding.recyclerView.adapter = cryptoAdapter
             }
         }
 
         viewModel.cryptoError.observe(viewLifecycleOwner) { error ->
             error?.let {
-                if (it) {
+                if (it.data == true) {
                     binding.cryptoErrorText.visibility = View.VISIBLE
                     binding.recyclerView.visibility = View.GONE
                     binding.cryptoProgressBar.visibility = View.GONE
@@ -65,7 +67,7 @@ class ListFragment : Fragment(R.layout.fragment_list), RecyclerViewAdapter.Liste
 
         viewModel.cryptoLoading.observe(viewLifecycleOwner) { loading ->
             loading?.let {
-                if (it) {
+                if (it.data == true) {
                     binding.cryptoProgressBar.visibility = View.VISIBLE
                     binding.recyclerView.visibility = View.GONE
                     binding.cryptoErrorText.visibility = View.GONE
